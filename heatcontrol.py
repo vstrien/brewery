@@ -50,6 +50,8 @@ while read_sensor(paths["tube"]) < doeltemp:
     if olddutycycle != dutycycle:
         print("[Opwarmen] wijzig duty cycle naar {}".format(dutycycle))
         p.ChangeDutyCycle(dutycycle)
+    for sensor, path in paths:
+        print("[Opwarmen] Temp {}: {}".format(sensor, read_sensor(path)))
     time.sleep(3)
 
 print("[Opwarmen] voltooid")
