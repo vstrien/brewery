@@ -20,11 +20,11 @@ paths = {
 
 IO.setwarnings(False)
 IO.setmode(IO.BCM)
-IO.setup(32, IO.OUT) # Pin 32 is GPIO 12
+IO.setup(12, IO.OUT) # Pin 12 is GPIO 18
 
 # channel, frequency in Hz 
 # 0.5 = once every two seconds
-p = IO.PWM(32, 10)
+p = IO.PWM(12, 10)
 
 
 # Sensors id's
