@@ -14,8 +14,8 @@ def read_sensor(path):
 
 # define paths to 1-wire sensor data
 paths = {
-  "tube": "/sys/bus/w1/devices/28-3c01d0750556/w1_slave",
-  "heatelement": "/sys/bus/w1/devices/28-3c01d075553b/w1_slave"
+  "heatelement": "/sys/bus/w1/devices/28-3c01d0750556/w1_slave",
+  "tube": "/sys/bus/w1/devices/28-3c01d075553b/w1_slave"
 }
 
 IO.setwarnings(False)
