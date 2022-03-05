@@ -31,6 +31,9 @@ p = IO.PWM(18, 10)
 # 28-3c01d0750556  
 # 28-3c01d075553b
 
+for element in paths:
+    print("{}: {}".format(element, read_sensor(paths[element])))
+
 ## Wat er moet gebeuren:
 doeltemp = int(input("Gewenste temperatuur (C):\n"))
 max_temp = int(input("Maximale temperatuur op verwarmingselement (C):\n"))
