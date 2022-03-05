@@ -44,18 +44,18 @@ p.start(dutycycle)
 while read_sensor(paths["tube"]) < doeltemp:
     olddutycycle = dutycycle
     if read_sensor(paths["heatelement"]) < max_temp:
-        dutycycle = min(dutycycle + 10, 100)
+        dutycycle = min(dutycycle + 1, 100)
     else:
-        dutycycle = max(dutycycle - 10, 0)
+        dutycycle = max(dutycycle - 1, 0)
     if olddutycycle != dutycycle:
         print("[Opwarmen] wijzig duty cycle naar {}".format(dutycycle))
         p.ChangeDutyCycle(dutycycle)
     for sensor in paths:
         print("[Opwarmen] Temp {}: {}".format(sensor, read_sensor(paths[sensor])))
-    time.sleep(3)
+    time.sleep(0.1)
 
 print("[Opwarmen] voltooid")
-p.stop()
+
 
 start_cooking_time = time.time()
 end_cooking_time = time.time() + (int(minutes_to_cook) * 60)
@@ -66,17 +66,20 @@ print("[Koken] start")
 while time.time() < end_cooking_time:
     olddutycycle = dutycycle
     if read_sensor(paths["tube"]) < doeltemp and read_sensor(paths["heatelement"]) < max_temp:
-        dutycycle = min(dutycycle + 10, 100)
+        dutycycle = min(dutycycle + 1, 100)
     else:
         # Als ofwel de doeltemp al bereikt is 
         # of het verwarmingselement wordt te warm
         # dan moet er altijd afgeschaald worden
         # Uitschakelen gaat vanzelf (dutycycle = 0)
-        dutycycle = max(dutycycle - 10, 0)
+        dutycycle = max(dutycycle - 1, 0)
     if olddutycycle != dutycycle:
         print("[Koken] wijzig duty cycle naar {}".format(dutycycle))
         p.ChangeDutyCycle(dutycycle)
-    time.sleep(1)
+    time.sleep(0.1)
+print("[Koken] voltooid")
+
+p.stop()
 
 ## WARMHOUDEN
 ## end_time = huidigetijd() + aantal_minuten_koken
