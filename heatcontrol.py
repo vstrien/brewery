@@ -83,6 +83,8 @@ while time.time() < end_cooking_time:
     if olddutycycle != dutycycle:
         print("[Koken] wijzig duty cycle naar {}".format(dutycycle))
         p.ChangeDutyCycle(dutycycle)
+    print("[Koken] Tubetemp: {}".format(tubetemp))
+    print("[Koken] Elemtemp: {}".format(elemtemp))
 
 print("[Koken] voltooid")
 
