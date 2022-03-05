@@ -32,9 +32,9 @@ p = IO.PWM(18, 10)
 # 28-3c01d075553b
 
 ## Wat er moet gebeuren:
-doeltemp = input("Gewenste temperatuur (C):\n")
-max_temp = input("Maximale temperatuur op verwarmingselement (C):\n")
-minutes_to_cook = input("Aantal minuten dat doeltemperatuur aangehouden moet worden:\n")
+doeltemp = int(input("Gewenste temperatuur (C):\n"))
+max_temp = int(input("Maximale temperatuur op verwarmingselement (C):\n"))
+minutes_to_cook = int(input("Aantal minuten dat doeltemperatuur aangehouden moet worden:\n"))
 
 print("[Opwarmen] start")
 
