@@ -58,7 +58,7 @@ print("[Opwarmen] voltooid")
 p.stop()
 
 start_cooking_time = time.time()
-end_cooking_time = time.time() + (minutes_to_cook * 60)
+end_cooking_time = time.time() + (int(minutes_to_cook) * 60)
 
 
 
