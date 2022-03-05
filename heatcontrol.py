@@ -72,7 +72,7 @@ end_cooking_time = time.time() + (int(minutes_to_cook) * 60)
 print("[Koken] start")
 while time.time() < end_cooking_time:
     olddutycycle = dutycycle
-    if read_sensor(paths["tube"]) < doeltemp and read_sensor(paths["heatelement"]) < max_temp:
+    if tubetemp < doeltemp and elemtemp < max_temp:
         dutycycle = min(dutycycle + 1, 100)
     else:
         # Als ofwel de doeltemp al bereikt is 
@@ -85,6 +85,8 @@ while time.time() < end_cooking_time:
         p.ChangeDutyCycle(dutycycle)
     print("[Koken] Tubetemp: {}".format(tubetemp))
     print("[Koken] Elemtemp: {}".format(elemtemp))
+    tubetemp = read_sensor(paths["tube"])
+    elemtemp = read_sensor(paths["heatelement"])
 
 print("[Koken] voltooid")
 
