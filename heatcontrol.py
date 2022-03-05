@@ -50,7 +50,7 @@ elemtemp = read_sensor(paths["heatelement"])
 while tubetemp < doeltemp:
     olddutycycle = dutycycle
     if elemtemp < max_temp:
-        dutycycle = min(dutycycle + 1, 100)
+        dutycycle = min(dutycycle + 2, 100)
     else:
         dutycycle = max(dutycycle - 10, 0)
     if olddutycycle != dutycycle:
@@ -73,7 +73,7 @@ print("[Koken] start")
 while time.time() < end_cooking_time:
     olddutycycle = dutycycle
     if tubetemp < doeltemp and elemtemp < max_temp:
-        dutycycle = min(dutycycle + 1, 100)
+        dutycycle = min(dutycycle + 2, 100)
     else:
         # Als ofwel de doeltemp al bereikt is 
         # of het verwarmingselement wordt te warm
