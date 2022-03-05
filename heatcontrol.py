@@ -44,17 +44,22 @@ print("[Opwarmen] start")
 dutycycle = 50
 olddutycycle = 50
 p.start(dutycycle)
-while read_sensor(paths["tube"]) < doeltemp:
+tubetemp = read_sensor(paths["tube"])
+elemtemp = read_sensor(paths["heatelement"])
+
+while tubetemp < doeltemp:
     olddutycycle = dutycycle
-    if read_sensor(paths["heatelement"]) < max_temp:
+    if elemtemp < max_temp:
         dutycycle = min(dutycycle + 1, 100)
     else:
         dutycycle = max(dutycycle - 10, 0)
     if olddutycycle != dutycycle:
         print("[Opwarmen] wijzig duty cycle naar {}".format(dutycycle))
         p.ChangeDutyCycle(dutycycle)
-    for sensor in paths:
-        print("[Opwarmen] Temp {}: {}".format(sensor, read_sensor(paths[sensor])))
+    print("[Opwarmen] Tubetemp: {}".format(tubetemp))
+    print("[Opwarmen] Elemtemp: {}".format(elemtemp))
+    tubetemp = read_sensor(paths["tube"])
+    elemtemp = read_sensor(paths["heatelement"])
 
 print("[Opwarmen] voltooid")
 
