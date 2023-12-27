@@ -30,6 +30,8 @@ while True:
         try:
             target_temperature = int(target_temperature)
             hc.setTargetTemperature(target_temperature)
+            if not(hc.is_started):
+                hc.start()
         except ValueError:
             print("Invalid input")
             continue

@@ -19,6 +19,7 @@ class HeatController:
     self.tube_path = tube_path
     self.heat_path = heat_path
     self.margin = 2 # Margin in degrees celcius
+    self.is_started = False
 
   @staticmethod
   def read_sensor(path):
@@ -73,7 +74,9 @@ class HeatController:
     self.update_thread = threading.Thread(target=self.updateDutyCycleDaemon)
     self.update_thread.daemon = True
     self.update_thread.start()
-     
+    self.is_started = True
+
   def stop(self):
     p.stop()
     self.update_thread.join(timeout=0)
+    self.is_started = False
