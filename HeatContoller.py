@@ -68,7 +68,7 @@ class HeatController:
 
   def start(self):
     self.updateDutyCycle()
-    p.start(self.dutycycle)
+    self.p.start(self.dutycycle)
 
     # Start the update thread
     self.update_thread = threading.Thread(target=self.updateDutyCycleDaemon)
@@ -77,6 +77,6 @@ class HeatController:
     self.is_started = True
 
   def stop(self):
-    p.stop()
+    self.p.stop()
     self.update_thread.join(timeout=0)
     self.is_started = False
