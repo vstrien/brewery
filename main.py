@@ -18,6 +18,8 @@ hc = HeatController(tube, heatelement)
 
 # Get user input
 while True:
+    print("Current temperature (tube) " + str(hc.tubetemp) + " C")
+    print("Current temperature (elem) " + str(hc.elemtemp) + " C")
     print("Enter the desired temperature (C):")
     print("Enter STOP to stop the program")
     target_temperature = input("Enter the desired temperature (C):\n")
