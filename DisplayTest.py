@@ -1,43 +1,46 @@
 import curses
-import random
+import re
 import time
+# Load settings
+import configparser
+config = configparser.ConfigParser()
+config.read('settings.ini')
+
+heatelement = config['devices']['heatelement']
+tube = config['devices']['tube']
+
+def read_sensor(path):
+    value = "U"
+    with open(path, "r") as f:
+        line = f.readline()
+        if re.match(r"([0-9a-f]{2} ){9}: crc=[0-9a-f]{2} YES", line):
+            line = f.readline()
+            m = re.match(r"([0-9a-f]{2} ){9}t=([+-]?[0-9]+)", line)
+            if m:
+                value = float(m.group(2)) / 1000.0
+    return value
 
 def main(stdscr):
     stdscr.nodelay(True)
 
     # Clear screen
     stdscr.clear()
-    input_str = ""
     
     while True:
         # Display the current temperature at the top of the screen
 
         stdscr.clear()
-        newtemp = random.randint(0, 100)
-        stdscr.addstr(0, 0, "Current temperature: {} C".format(newtemp))
-
-        # Get user input at the bottom of the screen
-        stdscr.addstr(curses.LINES - 1, 0, f"Enter the desired temperature (C) or STOP to stop the program: {input_str}")
+        
+        stdscr.addstr(0, 0, "Temperatures")
+        stdscr.addstr(1, 0, "|")
+        stdscr.addstr(2, 0, "+-- Element: {} C".format(read_sensor(heatelement)))
+        stdscr.addstr(3, 0, "|")
+        stdscr.addstr(4, 0, "+-- Tube   : {} C".format(read_sensor(tube)))
 
         ch = stdscr.getch()
-        if ch == ord('\n'):
-            target_temperature = input_str
-            if target_temperature.lower() == "stop":
-                print("Stopping")
-                break
-            else:
-                try:
-                    target_temperature = int(target_temperature)
-                    print("Setting standard temperature to {}".format(target_temperature))
-                except ValueError:
-                    stdscr.addstr(curses.LINES - 2, 0, "Invalid input")
+        if ch == ord('q'):
+            break
 
-            input_str = ""
-        elif ch == curses.KEY_BACKSPACE or ch == 127:
-            input_str = input_str[:-1]
-        elif ch != -1:
-            input_str += chr(ch)
-        
         time.sleep(0.5)
         
         stdscr.refresh()
