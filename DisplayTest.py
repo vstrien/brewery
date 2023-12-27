@@ -20,6 +20,10 @@ def read_sensor(path):
                 value = float(m.group(2)) / 1000.0
     return value
 
+# Get current date-time stamp in yyyymmddhhmmss format
+
+logfile = f"log_{time.strftime('%Y%m%d%H%M%S')}.txt"
+
 def main(stdscr):
     stdscr.nodelay(True)
 
@@ -30,12 +34,17 @@ def main(stdscr):
         # Display the current temperature at the top of the screen
 
         stdscr.clear()
-        
+        heat_element_temp = read_sensor(heatelement)
+        tube_temp = read_sensor(tube)
+
         stdscr.addstr(0, 0, "Temperatures")
         stdscr.addstr(1, 0, "|")
-        stdscr.addstr(2, 0, "+-- Element: {} C".format(read_sensor(heatelement)))
+        stdscr.addstr(2, 0, "+-- Element: {} C".format(heat_element_temp))
         stdscr.addstr(3, 0, "|")
-        stdscr.addstr(4, 0, "+-- Tube   : {} C".format(read_sensor(tube)))
+        stdscr.addstr(4, 0, "+-- Tube   : {} C".format(tube_temp))
+
+        with open(logfile, "a") as f:
+            f.write("{}\tE:{}\tT:{}\n".format(time.strftime('%Y%m%d%H%M%S'), heat_element_temp, tube_temp))
 
         ch = stdscr.getch()
         if ch == ord('q'):
