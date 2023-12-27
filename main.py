@@ -23,7 +23,7 @@ while True:
     print("Enter the desired temperature (C):")
     print("Enter STOP to stop the program")
     target_temperature = input("Enter the desired temperature (C):\n")
-    if target_temperature.lower == "stop":
+    if target_temperature.lower() == "stop":
         hc.stop()
         break
     else:
